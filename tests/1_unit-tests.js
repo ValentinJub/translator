@@ -8,8 +8,6 @@ const localeArray = [
   "american-to-british"
 ]
 
-
-
 suite('Unit Tests', () => {
   suite('Translate to British English', () => {
     test('Translate: "Mangoes are my favorite fruit.', () => {

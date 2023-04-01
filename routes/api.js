@@ -26,13 +26,13 @@ module.exports = function (app) {
         const translator = new Translator(text, locale);      
         const result = translator.translate();
         if(result.translation === text) {
-          console.log(`${locale}\nSource\n${text}\nResult\nEverything looks good to me!\n`);
+          // console.log(`${locale}\nSource\n${text}\nResult\nEverything looks good to me!\n`);
           return res.send({
             text: text,
             translation: "Everything looks good to me!"
           })
         }
-        console.log(`${locale}\nSource\n${text}\nResult\n${result.translation}\n`);
+        // console.log(`${locale}\nSource\n${text}\nResult\n${result.translation}\n`);
         return res.send({
           text: text,
           translation: result.translation
