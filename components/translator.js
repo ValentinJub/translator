@@ -16,11 +16,7 @@ const americanOnly = require('./american-only.js');
 const americanToBritishSpelling = require('./american-to-british-spelling.js');
 const americanToBritishTitles = require("./american-to-british-titles.js")
 const britishOnly = require('./british-only.js')
-const britishValues = Object.values(britishOnly)
-const britishSpellingValues = Object.values(americanToBritishSpelling)
-const britishTitleValues = Object.values(americanToBritishTitles)
 const timeCatcher = /[0-9]{2}[\.|:][0-9]{2}/
-const spaceCatcher = /\w+\s\w+/;
 
 class Translator {
 
@@ -50,16 +46,7 @@ class Translator {
 
     for(let i = 0, len = arrayOfWords.length; i < len; i++) {
       let word = arrayOfWords[i];
-      //if the word can be translated
-      if(word in americanToBritishSpelling) {
-        arrayOfWords[i] = `<span class="highlight">${americanToBritishSpelling[word]}</span>`
-      }
-      //if it is a title/honorifics
-      else if(word in americanToBritishTitles) {
-        arrayOfWords[i] = `<span class="highlight">${americanToBritishTitles[word]}</span>`
-      }
-      //if it is a time we translate to Brits time
-      else if(timeCatcher.test(word)) {
+      if(timeCatcher.test(word)) {
         word = word.replace(":", ".")
         arrayOfWords[i] = `<span class="highlight">${word}</span>`
       }
@@ -67,15 +54,40 @@ class Translator {
 
     let tempString = arrayOfWords.join(" ");
 
-    for(let key in britishOnly) {
-      if(tempString.includes(britishOnly[key])) {
-        tempString = tempString.replace(britishOnly[key], `<span class="highlight">${key}</span>`)
+    for(let key in americanToBritishTitles) {
+      let regex = new RegExp(`(?<![a-z])${key}(?![a-z])`, 'g')
+      if(regex.test(tempString)) {
+        tempString = tempString.replace(regex, `<span class="highlight">${americanToBritishTitles[key]}</span>`)
       }
+      // if(tempString.includes(key)) {
+      //   tempString = tempString.replace(key, `<span class="highlight">${americanToBritishTitles[key]}</span>`)
+      // }
+    } 
+
+    for(let key in americanToBritishSpelling) {
+      let regex = new RegExp(`(?<![a-z])${key}(?![a-z])`, 'g')
+      if(regex.test(tempString)) {
+        tempString = tempString.replace(regex, `<span class="highlight">${americanToBritishSpelling[key]}</span>`)
+      }
+      // if(tempString.includes(key)) {
+      //   tempString = tempString.replace(key, `<span class="highlight">${americanToBritishSpelling[key]}</span>`)
+      // }
+    }
+
+    for(let key in britishOnly) {
+      let regex = new RegExp(`(?<![a-z])${britishOnly[key]}(?![a-z])`, 'g')
+      if(regex.test(tempString)) {
+        tempString = tempString.replace(regex, `<span class="highlight">${key}</span>`)
+      }
+      // if(tempString.includes()) {
+      //   tempString = tempString.replace(britishOnly[key], `<span class="highlight">${key}</span>`)
+      // }
     }
 
     for(let key in americanOnly) {
-      if(tempString.includes(key)) {
-        tempString = tempString.replace(key, `<span class="highlight">${americanOnly[key]}</span>`)
+      let regex = new RegExp(`(?<![a-z])${key}(?![a-z])`, 'g')
+      if(regex.test(tempString)) {
+        tempString = tempString.replace(regex, `<span class="highlight">${americanOnly[key]}</span>`)
       }
     }
     return tempString;
@@ -86,18 +98,7 @@ class Translator {
 
     for(let i = 0, len = arrayOfWords.length; i < len; i++) {
       let word = arrayOfWords[i];
-      //if the word can be translated
-      if(britishSpellingValues.includes(word)) {
-        let key = this.getKeyByValue(americanToBritishSpelling, word)
-        arrayOfWords[i] = `<span class="highlight">${key}</span>`;
-      }
-      //if it is a title/honorifics
-      else if(britishTitleValues.includes(word)) {
-        let key = this.getKeyByValue(americanToBritishTitles, word)
-        arrayOfWords[i] = `<span class="highlight">${key}</span>`;
-      }
-      //if it is a time we translate to Brits time
-      else if(timeCatcher.test(word)) {
+      if(timeCatcher.test(word)) {
         word = word.replace(".", ":")
         arrayOfWords[i] = `<span class="highlight">${word}</span>`
       }
@@ -105,16 +106,44 @@ class Translator {
 
     let tempString = arrayOfWords.join(" ");
 
-    for(let key in britishOnly) {
-      if(tempString.includes(key)) {
-        tempString = tempString.replace(key, `<span class="highlight">${britishOnly[key]}</span>`)
+    for(let key in americanToBritishTitles) {
+      let regex = new RegExp(`(?<![a-z])${americanToBritishTitles[key]}(?![a-z])`, 'g')
+      if(regex.test(tempString)) {
+        tempString = tempString.replace(regex, `<span class="highlight">${key}</span>`)
       }
+      // if(tempString.includes(americanToBritishTitles[key])) {
+      //   tempString = tempString.replace(americanToBritishTitles[key], `<span class="highlight">${key}</span>`)
+      // }
+    } 
+
+    for(let key in americanToBritishSpelling) {
+      let regex = new RegExp(`(?<![a-z])${americanToBritishSpelling[key]}(?![a-z])`, 'g')
+      if(regex.test(tempString)) {
+        tempString = tempString.replace(regex, `<span class="highlight">${key}</span>`)
+      }
+      // if(tempString.includes(americanToBritishSpelling[key])) {
+      //   tempString = tempString.replace(americanToBritishSpelling[key], `<span class="highlight">${key}</span>`)
+      // }
+    }
+
+    for(let key in britishOnly) {
+      let regex = new RegExp(`(?<![a-z])${key}(?![a-z])`, 'g')
+      if(regex.test(tempString)) {
+        tempString = tempString.replace(regex, `<span class="highlight">${britishOnly[key]}</span>`)
+      }
+      // if(tempString.includes(key)) {
+      //   tempString = tempString.replace(key, `<span class="highlight">${britishOnly[key]}</span>`)
+      // }
     }
 
     for(let key in americanOnly) {
-      if(tempString.includes(americanOnly[key])) {
-        tempString = tempString.replace(americanOnly[key], `<span class="highlight">${key}</span>`)
+      let regex = new RegExp(`(?<![a-z])${americanOnly[key]}(?![a-z])`, 'g')
+      if(regex.test(tempString)) {
+        tempString = tempString.replace(regex, `<span class="highlight">${key}</span>`)
       }
+      // if(tempString.includes(americanOnly[key])) {
+      //   tempString = tempString.replace(americanOnly[key], `<span class="highlight">${key}</span>`)
+      // }
     }
     return tempString;
   }
