@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "mocha --timeout 5000 --require @babel/register --recursive --exit --ui tdd tests/"
+    "test": "mocha --timeout 5000 --require @babel/register --recursive --exit --ui tdd tests/",
+    "devStart": "nodemon server.js"
   },
   "dependencies": {
     "@babel/core": "^7.11.6",
@@ -18,7 +19,9 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsdom": "^16.4.0",
-    "mocha": "^10.2.0",
+    "mocha": "^10.2.0"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.4"
   },
   "license": "MIT"

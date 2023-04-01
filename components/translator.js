@@ -16,7 +16,7 @@ const americanOnly = require('./american-only.js');
 const americanToBritishSpelling = require('./american-to-british-spelling.js');
 const americanToBritishTitles = require("./american-to-british-titles.js")
 const britishOnly = require('./british-only.js')
-const timeCatcher = /[0-9]{2}[\.|:][0-9]{2}/
+const timeCatcher = /[0-9]{1,2}[\.|:][0-9]{2}/
 
 class Translator {
 
@@ -65,7 +65,7 @@ class Translator {
     } 
 
     for(let key in americanToBritishSpelling) {
-      let regex = new RegExp(`(?<![a-z])${key}(?![a-z])`, 'g')
+      let regex = new RegExp(`(?<![a-z])${key}(?![a-z])`, 'gi')
       if(regex.test(tempString)) {
         tempString = tempString.replace(regex, `<span class="highlight">${americanToBritishSpelling[key]}</span>`)
       }
@@ -75,7 +75,7 @@ class Translator {
     }
 
     for(let key in britishOnly) {
-      let regex = new RegExp(`(?<![a-z])${britishOnly[key]}(?![a-z])`, 'g')
+      let regex = new RegExp(`(?<![a-z])${britishOnly[key]}(?![a-z])`, 'gi')
       if(regex.test(tempString)) {
         tempString = tempString.replace(regex, `<span class="highlight">${key}</span>`)
       }
@@ -85,7 +85,7 @@ class Translator {
     }
 
     for(let key in americanOnly) {
-      let regex = new RegExp(`(?<![a-z])${key}(?![a-z])`, 'g')
+      let regex = new RegExp(`(?<![a-z])${key}(?![a-z])`, 'gi')
       if(regex.test(tempString)) {
         tempString = tempString.replace(regex, `<span class="highlight">${americanOnly[key]}</span>`)
       }
@@ -117,7 +117,7 @@ class Translator {
     } 
 
     for(let key in americanToBritishSpelling) {
-      let regex = new RegExp(`(?<![a-z])${americanToBritishSpelling[key]}(?![a-z])`, 'g')
+      let regex = new RegExp(`(?<![a-z])${americanToBritishSpelling[key]}(?![a-z])`, 'gi')
       if(regex.test(tempString)) {
         tempString = tempString.replace(regex, `<span class="highlight">${key}</span>`)
       }
@@ -127,7 +127,7 @@ class Translator {
     }
 
     for(let key in britishOnly) {
-      let regex = new RegExp(`(?<![a-z])${key}(?![a-z])`, 'g')
+      let regex = new RegExp(`(?<![a-z])${key}(?![a-z])`, 'gi')
       if(regex.test(tempString)) {
         tempString = tempString.replace(regex, `<span class="highlight">${britishOnly[key]}</span>`)
       }
@@ -137,7 +137,7 @@ class Translator {
     }
 
     for(let key in americanOnly) {
-      let regex = new RegExp(`(?<![a-z])${americanOnly[key]}(?![a-z])`, 'g')
+      let regex = new RegExp(`(?<![a-z])${americanOnly[key]}(?![a-z])`, 'gi')
       if(regex.test(tempString)) {
         tempString = tempString.replace(regex, `<span class="highlight">${key}</span>`)
       }
